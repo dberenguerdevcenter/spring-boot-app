@@ -1,5 +1,9 @@
 pipeline{
-	agent any
+	agent { 
+        node { 
+            label 'nodo-java' 
+        }
+    }
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('docker-hub')
 	}

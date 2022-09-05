@@ -10,7 +10,8 @@ pipeline{
 	stages {
 		stage('Build') {
 			steps {
-                sh 'mvn clean install -f pom.xml'
+                sh 'mvn clean install'
+				jacoco()
 				sh 'docker build -t dberenguerdevcenter/spring-boot-app:latest .'
 			}
 		}

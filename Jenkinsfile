@@ -37,6 +37,7 @@ pipeline{
                     if(artifactExists) {
                         echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
                         versionPom = echo "${pom.version}"
+                        echo "2 -> ${versionPom}"
 
                         nexusArtifactUploader(
                             nexusVersion: NEXUS_VERSION,
@@ -70,12 +71,13 @@ pipeline{
 
 		stage('Build and Push image to Docker Hub') {
 			steps {
+                echo "3 -> ${versionPom}"
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh """
-                   docker build -t dberenguerdevcenter/spring-boot-app:$versionPom .
+                   docker build -t dberenguerdevcenter/spring-boot-app:${versionPom} .
                    """
                 sh """
-                   docker push dberenguerdevcenter/spring-boot-app:$versionPom
+                   docker push dberenguerdevcenter/spring-boot-app:${versionPom}
                    """
                 sh 'docker build -t dberenguerdevcenter/spring-boot-app:latest .'
                 sh 'docker push dberenguerdevcenter/spring-boot-app:latest'

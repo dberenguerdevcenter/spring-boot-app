@@ -70,10 +70,14 @@ pipeline{
 
 		stage('Build and Push image to Docker Hub') {
 			steps {
-				sh 'docker build -t dberenguerdevcenter/spring-boot-app:${versionPom} .'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh """
+                   docker build -t dberenguerdevcenter/spring-boot-app:${versionPom} .
+                   """
+                sh """
+                   docker push dberenguerdevcenter/spring-boot-app:${versionPom}
+                   """
                 sh 'docker build -t dberenguerdevcenter/spring-boot-app:latest .'
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-				sh 'docker push dberenguerdevcenter/spring-boot-app:${versionPom}'
                 sh 'docker push dberenguerdevcenter/spring-boot-app:latest'
 			}
 		}

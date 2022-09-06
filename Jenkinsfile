@@ -1,5 +1,5 @@
+def versionPom = ''
 pipeline{
-    def versionPom = ''
 	agent { 
         node { 
             label 'nodo-java' 

@@ -1,8 +1,8 @@
-def versionPom = ''
+def versionPom = ""
 pipeline{
 	agent { 
         node { 
-            label 'nodo-java' 
+            label "nodo-java"
         }
     }
 	environment {
@@ -11,12 +11,12 @@ pipeline{
         NEXUS_URL = "192.168.49.6:8081"
         NEXUS_REPOSITORY = "bootcamp"
         NEXUS_CREDENTIAL_ID = "nexus"
-		DOCKERHUB_CREDENTIALS=credentials('docker-hub')
+		DOCKERHUB_CREDENTIALS=credentials("docker-hub")
 	}
 	stages {
-		stage('Build') {
+		stage("Build") {
 			steps {
-                sh 'mvn clean package'
+                sh "mvn clean package"
 				jacoco()
 			}
 		}
@@ -37,7 +37,12 @@ pipeline{
                     if(artifactExists) {
                         echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
                         versionPom = echo "${pom.version}"
+                        echo "1 -> ${versionPom}"
+                        versionPom = "abc"
                         echo "2 -> ${versionPom}"
+                        versionPom = "${pom.version}"
+                        echo versionPom
+                        echo "fin"
 
                         nexusArtifactUploader(
                             nexusVersion: NEXUS_VERSION,
@@ -50,13 +55,13 @@ pipeline{
                             artifacts: [
                                 // Artifact generated such as .jar, .ear and .war files.
                                 [artifactId: pom.artifactId,
-                                classifier: '',
+                                classifier: "",
                                 file: artifactPath,
                                 type: pom.packaging],
 
                                 // Lets upload the pom.xml file for additional information for Transitive dependencies
                                 [artifactId: pom.artifactId,
-                                classifier: '',
+                                classifier: "",
                                 file: "pom.xml",
                                 type: "pom"]
                             ]
@@ -69,31 +74,31 @@ pipeline{
             }
         }
 
-		stage('Build and Push image to Docker Hub') {
+		stage("Build and Push image to Docker Hub") {
 			steps {
                 echo "3 -> ${versionPom}"
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
                 sh """
                    docker build -t dberenguerdevcenter/spring-boot-app:${versionPom} .
                    """
                 sh """
                    docker push dberenguerdevcenter/spring-boot-app:${versionPom}
                    """
-                sh 'docker build -t dberenguerdevcenter/spring-boot-app:latest .'
-                sh 'docker push dberenguerdevcenter/spring-boot-app:latest'
+                sh "docker build -t dberenguerdevcenter/spring-boot-app:latest ."
+                sh "docker push dberenguerdevcenter/spring-boot-app:latest"
 			}
 		}
-		stage('Deploy to K8s')
+		stage("Deploy to K8s")
 		{
 			steps{
-				sh 'git clone https://github.com/dberenguerdevcenter/kubernetes-helm-docker-config.git configuracion --branch demo-java'
-				sh 'kubectl apply -f configuracion/kubernetes-deployments/spring-boot-app/deployment.yaml --kubeconfig=configuracion/kubernetes-config/config'
+				sh "git clone https://github.com/dberenguerdevcenter/kubernetes-helm-docker-config.git configuracion --branch demo-java"
+				sh "kubectl apply -f configuracion/kubernetes-deployments/spring-boot-app/deployment.yaml --kubeconfig=configuracion/kubernetes-config/config"
 			}
 		}
 	}
 	post {
 		always {
-			sh 'docker logout'
+			sh "docker logout"
 		}
 	}
 }

@@ -12,7 +12,7 @@ pipeline{
 			steps {
                 sh 'mvn clean install'
 				jacoco()
-				nexusArtifactUploader artifacts: credentialsId: 'nexus', groupId: 'com.bezkoder', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'bootcamp', version: '0.0.1-SNAPSHOT', [[artifactId: 'spring-boot-jpa-h2', classifier: '', file: 'target/spring-boot-jpa-h2-0.0.1-SNAPSHOT.jar', type: 'jar']]
+				nexusArtifactUploader credentialsId: 'nexus', groupId: 'com.bezkoder', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'bootcamp', version: '0.0.1-SNAPSHOT', artifacts: [[artifactId: 'spring-boot-jpa-h2', classifier: '', file: 'target/spring-boot-jpa-h2-0.0.1-SNAPSHOT.jar', type: 'jar']]
 			}
 		}
 		stage('Build and Push image to Docker Hub') {

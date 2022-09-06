@@ -11,6 +11,7 @@ pipeline{
         NEXUS_URL = "192.168.49.6:8081"
         NEXUS_REPOSITORY = "bootcamp"
         NEXUS_CREDENTIAL_ID = "nexus"
+        DOCKER_IMAGE_NAME="dberenguerdevcenter/spring-boot-app"
 		DOCKERHUB_CREDENTIALS=credentials("docker-hub")
 	}
 	stages {
@@ -36,13 +37,7 @@ pipeline{
 
                     if(artifactExists) {
                         echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
-                        versionPom = echo "${pom.version}"
-                        echo "1 -> ${versionPom}"
-                        versionPom = "abc"
-                        echo "2 -> ${versionPom}"
                         versionPom = "${pom.version}"
-                        echo versionPom
-                        echo "fin"
 
                         nexusArtifactUploader(
                             nexusVersion: NEXUS_VERSION,
@@ -73,19 +68,17 @@ pipeline{
                 }
             }
         }
-
-		stage("Build and Push image to Docker Hub") {
+		stage("Build image and push to Docker Hub") {
 			steps {
-                echo "3 -> ${versionPom}"
                 sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
                 sh """
-                   docker build -t dberenguerdevcenter/spring-boot-app:${versionPom} .
+                   docker build -t $DOCKER_IMAGE_NAME:${versionPom} .
                    """
                 sh """
-                   docker push dberenguerdevcenter/spring-boot-app:${versionPom}
+                   docker push $DOCKER_IMAGE_NAME:${versionPom}
                    """
-                sh "docker build -t dberenguerdevcenter/spring-boot-app:latest ."
-                sh "docker push dberenguerdevcenter/spring-boot-app:latest"
+                sh "docker build -t $DOCKER_IMAGE_NAME:latest ."
+                sh "docker push $DOCKER_IMAGE_NAME:latest"
 			}
 		}
 		stage("Deploy to K8s")

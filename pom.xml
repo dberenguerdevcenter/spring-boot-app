@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.bezkoder</groupId>
 	<artifactId>spring-boot-jpa-h2</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name>spring-boot-jpa-h2</name>
 	<description>Spring Boot JPA + H2 database example - CRUD Rest Apis</description>
 

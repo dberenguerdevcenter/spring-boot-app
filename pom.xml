@@ -83,4 +83,17 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>bootcamp</id>
+			<name>Bootcampt</name>
+			<url>http://localhost:8081/repository/bootcamp</url>
+		</repository>
+		<snapshotRepository>
+			<id>bootcamp</id>
+			<name>Bootcampt</name>
+			<url>http://localhost:8081/repository/bootcamp</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>

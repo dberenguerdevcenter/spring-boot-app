@@ -12,12 +12,12 @@ pipeline{
 			steps {
                 sh 'mvn clean install'
 				jacoco()
-				nexusArtifactUploader artifacts: [[artifactId: 'spring-boot-jpa-h2', classifier: '', file: 'target/spring-boot-jpa-h2-0.0.1-SNAPSHOT.jar', type: 'jar']], credentialsId: 'nexus', groupId: 'com.bezkoder', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'bootcamp', version: '0.0.1-SNAPSHOT'
-				sh 'docker build -t dberenguerdevcenter/spring-boot-app:latest .'
+				nexusArtifactUploader artifacts: credentialsId: 'nexus', groupId: 'com.bezkoder', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'bootcamp', version: '0.0.1-SNAPSHOT', [[artifactId: 'spring-boot-jpa-h2', classifier: '', file: 'target/spring-boot-jpa-h2-0.0.1-SNAPSHOT.jar', type: 'jar']]
 			}
 		}
-		stage('Push Image to Docker Hub') {
+		stage('Build and Push image to Docker Hub') {
 			steps {
+				sh 'docker build -t dberenguerdevcenter/spring-boot-app:latest .'
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 				sh 'docker push dberenguerdevcenter/spring-boot-app:latest'
 			}

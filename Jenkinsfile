@@ -1,4 +1,5 @@
 pipeline{
+    def versionPom = ''
 	agent { 
         node { 
             label 'nodo-java' 
@@ -23,18 +24,19 @@ pipeline{
             steps {
                 script {
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
-                    pom = readMavenPom file: "pom.xml";
+                    pom = readMavenPom file: "pom.xml"
                     // Find built artifact under target folder
-                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
+                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}")
                     // Print some info from the artifact found
                     echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
                     // Extract the path from the File found
-                    artifactPath = filesByGlob[0].path;
+                    artifactPath = filesByGlob[0].path
                     // Assign to a boolean response verifying If the artifact name exists
-                    artifactExists = fileExists artifactPath;
+                    artifactExists = fileExists artifactPath
 
                     if(artifactExists) {
-                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
+                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}"
+                        versionPom = ${pom.version}
 
                         nexusArtifactUploader(
                             nexusVersion: NEXUS_VERSION,
@@ -57,10 +59,10 @@ pipeline{
                                 file: "pom.xml",
                                 type: "pom"]
                             ]
-                        );
+                        )
 
                     } else {
-                        error "*** File: ${artifactPath}, could not be found";
+                        error "*** File: ${artifactPath}, could not be found"
                     }
                 }
             }
@@ -68,9 +70,11 @@ pipeline{
 
 		stage('Build and Push image to Docker Hub') {
 			steps {
-				sh 'docker build -t dberenguerdevcenter/spring-boot-app:latest .'
+				sh 'docker build -t dberenguerdevcenter/spring-boot-app:${versionPom} .'
+                sh 'docker build -t dberenguerdevcenter/spring-boot-app:latest .'
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-				sh 'docker push dberenguerdevcenter/spring-boot-app:latest'
+				sh 'docker push dberenguerdevcenter/spring-boot-app:${versionPom}'
+                sh 'docker push dberenguerdevcenter/spring-boot-app:latest'
 			}
 		}
 		stage('Deploy to K8s')

@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.bezkoder</groupId>
 	<artifactId>spring-boot-jpa-h2</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>spring-boot-jpa-h2</name>
 	<description>Spring Boot JPA + H2 database example - CRUD Rest Apis</description>
 
@@ -83,7 +83,7 @@
 		</plugins>
 	</build>
 
-	<distributionManagement>
+	<!--<distributionManagement>
 		<repository>
 			<id>bootcamp</id>
 			<name>Bootcampt</name>
@@ -94,6 +94,6 @@
 			<name>Bootcampt</name>
 			<url>http://192.168.49.6:8081/repository/bootcamp</url>
 		</snapshotRepository>
-	</distributionManagement>
+	</distributionManagement> -->
 
 </project>

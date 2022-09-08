@@ -85,7 +85,8 @@ pipeline{
 		}
 		stage("Deploy to K8s") {
             when { 
-                branch 'master' 
+                beforeInput true
+                branch "master"
             }
             input {
                 message "Deploy to production?"

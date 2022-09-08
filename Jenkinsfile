@@ -83,9 +83,15 @@ pipeline{
                 sh "docker push $DOCKER_IMAGE_NAME:latest"
 			}
 		}
-		stage("Deploy to K8s")
-		{
-			steps{
+		stage("Deploy to K8s") {
+            when { 
+                branch 'master' 
+            }
+            input {
+                message "Deploy to production?"
+                id "simple-input"
+            }
+			steps {
 				sh "git clone https://github.com/dberenguerdevcenter/kubernetes-helm-docker-config.git configuracion --branch demo-java"
 				sh "kubectl apply -f configuracion/kubernetes-deployments/spring-boot-app/deployment.yaml --kubeconfig=configuracion/kubernetes-config/config"
 			}

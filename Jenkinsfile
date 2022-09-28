@@ -29,11 +29,9 @@ pipeline{
 		}
 		stage("Publish to Nexus") {
             steps {
-                script {
-                    pom = readMavenPom file: "pom.xml"
-                    versionPom = "${pom.version}"
-                    sh "mvn deploy -DskipTests"
-                }
+                pom = readMavenPom file: "pom.xml"
+                versionPom = "${pom.version}"
+                sh "mvn deploy -DskipTests"
             }
         }
 		stage("Build image and push to Docker Hub") {

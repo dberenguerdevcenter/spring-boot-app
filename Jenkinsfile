@@ -11,6 +11,7 @@ pipeline{
         registryBackend = 'franaznarteralco/backend-demo'
     }
 	stages {
+
         stage('SonarQube analysis') {
           steps {
             withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){

@@ -59,7 +59,7 @@ pipeline{
 		{
 			steps{
 				sh "git clone https://github.com/dberenguerdevcenter/kubernetes-helm-docker-config.git configuracion --branch test-implementation"
-				sh "kubectl apply -f configuracion/kubernetes-deployments/spring-boot-app/deployment.yaml --kubeconfig=configuracion/kubernetes-config/config"
+				sh "kubectl apply -f configuracion/kubernetes-deployments/spring-boot-app/manifest.yml --kubeconfig=configuracion/kubernetes-config/config"
 			}
 		}
 

@@ -29,8 +29,7 @@
                 <sonar.host.url>
                     http://sonarqube:9000
                 </sonar.host.url>
-                <sonar.login>admin</sonar.login>
-                <sonar.password>admin123</sonar.password>
+                <sonar.login>squ_aef171a93ea1b6dbea7ecac58bd1e2a559dec9ce</sonar.login>
             </properties>
         </profile>
     </profiles>

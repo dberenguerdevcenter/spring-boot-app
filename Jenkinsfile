@@ -5,10 +5,11 @@ pipeline{
             label "nodo-java"
         }
     }
-	environment {
-        DOCKER_IMAGE_NAME="franaznarteralco/backend-demo"
-		DOCKERHUB_CREDENTIALS=credentials("docker-hub-credentials")
-	}
+
+    environment {
+        registryCredential='docker-hub-credentials'
+        registryBackend = 'franaznarteralco/backend-demo'
+    }
 	stages {
         stage('SonarQube analysis') {
           steps {
@@ -31,15 +32,27 @@ pipeline{
           }
         }
 
-		stage("Build image and push to Docker Hub") {
-			steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh "docker build -t $DOCKER_IMAGE_NAME:${versionPom} ."
-                sh "docker push $DOCKER_IMAGE_NAME:${versionPom}"
-                sh "docker build -t $DOCKER_IMAGE_NAME:latest ."
-                sh "docker push $DOCKER_IMAGE_NAME:latest"
-			}
-		}
+        stage('Push Image to Docker Hub') {
+          steps {
+            script {
+              dockerImage = docker.build registryBackend + ":$BUILD_NUMBER"
+              docker.withRegistry( '', registryCredential) {
+                dockerImage.push()
+              }
+            }
+          }
+        }
+
+        stage('Push Image latest to Docker Hub') {
+          steps {
+            script {
+              dockerImage = docker.build registryBackend + ":latest"
+              docker.withRegistry( '', registryCredential) {
+                dockerImage.push()
+              }
+            }
+          }
+        }
 		stage("Deploy to K8s")
 		{
 			steps{

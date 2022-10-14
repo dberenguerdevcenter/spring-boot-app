@@ -53,6 +53,7 @@ pipeline{
             }
           }
         }
+
 		stage("Deploy to K8s")
 		{
 			steps{
@@ -60,6 +61,7 @@ pipeline{
 				sh "kubectl apply -f configuracion/kubernetes-deployments/spring-boot-app/deployment.yaml --kubeconfig=configuracion/kubernetes-config/config"
 			}
 		}
+
 	}
 	post {
 		always {

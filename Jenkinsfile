@@ -58,6 +58,11 @@ pipeline{
 		stage("Deploy to K8s")
 		{
 			steps{
+                script {
+                  if(fileExists("configuracion")){
+                    sh 'rm -r configuracion'
+                  }
+                }
 				sh "git clone https://github.com/dberenguerdevcenter/kubernetes-helm-docker-config.git configuracion --branch test-implementation"
 				sh "kubectl apply -f configuracion/kubernetes-deployments/spring-boot-app/manifest.yml --kubeconfig=configuracion/kubernetes-config/config"
 			}

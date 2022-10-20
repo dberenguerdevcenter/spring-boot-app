@@ -33,6 +33,15 @@ pipeline{
 //           }
 //         }
 
+        stage('SonarQube analysis') {
+          steps {
+            withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
+                sh "mvn clean install -DskipTests"
+            }
+          }
+        }
+
+
         stage('Push Image to Docker Hub') {
           steps {
             script {

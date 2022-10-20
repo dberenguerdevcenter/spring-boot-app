@@ -35,9 +35,7 @@ pipeline{
 
         stage('SonarQube analysis') {
           steps {
-            withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
-                sh "mvn clean install -DskipTests"
-            }
+               sh "mvn clean install -DskipTests"
           }
         }
 

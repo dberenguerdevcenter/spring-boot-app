@@ -77,7 +77,7 @@ pipeline{
 
         stage ("Run API Test") {
             steps{
-                docker { image 'postman/newman' args '-u root'}
+                agent{ docker { image 'postman/newman' args '-u root'} }
                     script {
                         sleep 15 // seconds
                         sh 'run -t https://www.getpostman.com/collections/a1dcbdeffa4f2abe5782'

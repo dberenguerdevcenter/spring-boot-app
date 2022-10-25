@@ -64,7 +64,7 @@
 					"raw": "{\r\n    \"title\": \"api-test\",\r\n    \"description\": \"api-test\",\r\n    \"published\": true\r\n}"
 				},
 				"url": {
-					"raw": "https://ee44e788925c7f.lhr.life/api/tutorials",
+					"raw": "https://ce208c770a9603.lhr.life/api/tutorials",
 					"protocol": "https",
 					"host": [
 						"ee44e788925c7f",

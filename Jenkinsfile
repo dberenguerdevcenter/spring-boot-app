@@ -86,7 +86,7 @@ pipeline{
                         sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch api-test-implementation'
                         sh 'ls -la'
                         sh 'pwd'
-                        sh 'newman run src/main/resources/bootcamp.postman_collection.json'
+                        sh 'newman run spring-boot-app/src/main/resources/bootcamp.postman_collection.json'
                     }
                 }
             }

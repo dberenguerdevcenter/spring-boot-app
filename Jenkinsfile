@@ -77,14 +77,12 @@ pipeline{
 
         stage ("Run API Test") {
             steps{
-                node("node-nodejs") {
-                    args '-u root:root'
+                docker { image 'postman/newman' args '-u root'}
                     script {
-                        sh 'npm install -g -y newman'
                         sleep 15 // seconds
-                        sh 'newman run src/main/resources/bootcamp.postman_collection.json'
+                        sh 'run -t https://www.getpostman.com/collections/a1dcbdeffa4f2abe5782'
                     }
-                }
+
             }
         }
 

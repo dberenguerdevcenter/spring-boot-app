@@ -76,12 +76,14 @@ pipeline{
 		}
 
         stage ("Run API Test") {
+            agent{
+                docker { image 'postman/newman'}
+            }
             steps{
-                agent{docker{ image 'postman/newman'}}
-                    script {
-                        sleep 15 // seconds
-                        sh 'run -t https://www.getpostman.com/collections/a1dcbdeffa4f2abe5782'
-                    }
+                script {
+                    sleep 15 // seconds
+                    sh 'run -t https://www.getpostman.com/collections/a1dcbdeffa4f2abe5782'
+                }
 
             }
         }

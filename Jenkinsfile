@@ -76,18 +76,16 @@ pipeline{
 		}
 
         stage ("Run API Test") {
-            agent{
-                docker { image 'postman/newman'}
-            }
-            steps{
-                script {
-                    sleep 15 // seconds
-                    sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch api-test-implementation'
-                    sh 'newman run src/main/resources/bootcamp.postman_collection.json'
-
+            node("node-nodejs"){
+                steps{
+                    script {
+                        sleep 15 // seconds
+                        sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch api-test-implementation'
+                        sh 'newman run src/main/resources/bootcamp.postman_collection.json'
+                    }
                 }
-
             }
+
         }
 
 	}

@@ -76,12 +76,11 @@ pipeline{
 		}
 
         stage ("Run API Test") {
+            environment {
+                NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
+            }
             steps{
                 node("node-nodejs") {
-                    environment {
-                        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
-                    }
-
                     script {
                         sh 'npm install -g -y newman'
                         sleep 15 // seconds

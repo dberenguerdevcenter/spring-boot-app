@@ -79,11 +79,7 @@ pipeline{
                 node("node-nodejs") {
                     script {
                         sh 'npm install newman'
-                    }
-
-                    script {
-                        def time = 15
-                        sleep time.toInteger() // seconds
+                        sleep 15 // seconds
                         sh 'newman run src/main/resources/bootcamp.postman_collection.json'
                     }
                 }
@@ -91,6 +87,7 @@ pipeline{
         }
 
 	}
+
 	post {
 		always {
 			sh "docker logout"

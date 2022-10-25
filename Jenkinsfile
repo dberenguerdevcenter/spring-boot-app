@@ -34,12 +34,6 @@ pipeline{
           }
         }
 
-        stage('SonarQube analysis') {
-          steps {
-               sh "mvn clean install -DskipTests"
-          }
-        }
-
         stage('Push Image to Docker Hub') {
           steps {
             script {

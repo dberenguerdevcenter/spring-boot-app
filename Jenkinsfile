@@ -9,8 +9,10 @@ pipeline{
     environment {
         registryCredential='docker-hub-credentials'
         registryBackend = 'franaznarteralco/backend-demo'
+        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
     }
-	stages {
+
+    stages {
 
 //         stage('SonarQube analysis') {
 //           steps {

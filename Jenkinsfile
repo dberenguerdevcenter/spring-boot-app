@@ -76,8 +76,8 @@ pipeline{
 		}
 
         stage ("Run API Test") {
-            node("node-nodejs"){
-                steps{
+            steps{
+                node("node-nodejs"){
                     script {
                         sleep 15 // seconds
                         sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch api-test-implementation'
@@ -85,7 +85,6 @@ pipeline{
                     }
                 }
             }
-
         }
 
 	}

@@ -79,6 +79,9 @@ pipeline{
             steps{
                 node("node-nodejs"){
                     script {
+                        if(fileExists("spring-boot-app")){
+                            sh 'rm -r spring-boot-app'
+                        }
 //                         sleep 15 // seconds
                         sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch api-test-implementation'
                         sh 'ls -la'

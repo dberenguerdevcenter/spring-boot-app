@@ -78,7 +78,7 @@ pipeline{
             steps{
                 node("node-nodejs") {
                     script {
-                        sh 'npm -y install newman'
+                        sh 'npm install -g -y newman'
                         sleep 15 // seconds
                         sh 'newman run src/main/resources/bootcamp.postman_collection.json'
                     }

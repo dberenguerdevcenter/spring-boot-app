@@ -88,6 +88,7 @@ pipeline{
                         sh 'pwd'
                         sh 'newman run spring-boot-app/src/main/resources/bootcamp.postman_collection.json --reporters cli,junit --reporter-junit-export "newman/report.xml"'
                     }
+
                 }
             }
         }

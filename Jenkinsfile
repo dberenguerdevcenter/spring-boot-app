@@ -74,21 +74,23 @@ pipeline{
 			}
 		}
 
-		stage ("Run API Test") {
-            node {
-                label "node-nodejs"
-            }
+        stage ("Run API Test") {
+            steps{
+                node {
+                    label "node-nodejs"
+                }
 
-            script {
-                sh 'npm install newman'
-            }
+                script {
+                    sh 'npm install newman'
+                }
 
-            def time = 15
-            echo "Waiting ${SLEEP_TIME_IN_SECONDS} seconds for deployment to complete prior starting smoke testing"
-            sleep time.toInteger() // seconds
+                def time = 15
+                echo "Waiting ${SLEEP_TIME_IN_SECONDS} seconds for deployment to complete prior starting smoke testing"
+                sleep time.toInteger() // seconds
 
-            script {
-                sh 'newman run src/main/resources/bootcamp.postman_collection.json'
+                script {
+                    sh 'newman run src/main/resources/bootcamp.postman_collection.json'
+                }
             }
         }
 

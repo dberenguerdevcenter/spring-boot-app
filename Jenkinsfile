@@ -9,7 +9,6 @@ pipeline{
     environment {
         registryCredential='docker-hub-credentials'
         registryBackend = 'franaznarteralco/backend-demo'
-        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
     }
 
     stages {
@@ -79,6 +78,10 @@ pipeline{
         stage ("Run API Test") {
             steps{
                 node("node-nodejs") {
+                    environment {
+                        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
+                    }
+
                     script {
                         sh 'npm install -g -y newman'
                         sleep 15 // seconds

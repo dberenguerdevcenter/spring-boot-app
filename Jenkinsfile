@@ -82,7 +82,9 @@ pipeline{
             steps{
                 script {
                     sleep 15 // seconds
-                    sh 'run -t https://www.getpostman.com/collections/a1dcbdeffa4f2abe5782'
+                    sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch api-test-implementation'
+                    sh 'newman run src/main/resources/bootcamp.postman_collection.json'
+
                 }
 
             }

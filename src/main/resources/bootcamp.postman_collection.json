@@ -64,10 +64,10 @@
 					"raw": "{\r\n    \"title\": \"api-test\",\r\n    \"description\": \"api-test\",\r\n    \"published\": true\r\n}"
 				},
 				"url": {
-					"raw": "https://0c39f6769e193d.lhr.life/api/tutorials",
+					"raw": "https://b30c356af4dd9a.lhr.life/api/tutorials",
 					"protocol": "https",
 					"host": [
-						"0c39f6769e193d",
+						"b30c356af4dd9a",
 						"lhr",
 						"life"
 					],

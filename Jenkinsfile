@@ -94,6 +94,9 @@ pipeline{
 //         }
 
         stage ("Run Performance Test") {
+            agent {
+                docker { image 'justb4/jmeter' }
+            }
             steps{
                 script {
                     if(fileExists("spring-boot-app")){

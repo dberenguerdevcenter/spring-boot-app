@@ -104,7 +104,7 @@ pipeline{
 //             }
             steps{
                 script {
-                    docker.image('justb4/jmeter').inside{ c ->
+                    docker.image('justb4/jmeter').inside("""--entrypoint=''"""){ c ->
 
                         sh '-n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl'
 

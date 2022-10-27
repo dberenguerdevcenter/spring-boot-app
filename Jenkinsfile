@@ -93,16 +93,20 @@ pipeline{
 //         }
 
         stage ("Run Performance Test") {
+            agent {
+                docker {
+                    image 'justb4/jmeter'
+                    args '--entrypoint='
+                }
+            }
             steps{
                 script {
                     if(fileExists("spring-boot-app")){
                         sh 'rm -r spring-boot-app'
                     }
-                    docker.image('justb4/jmeter').inside("""--entrypoint=''""") {
-                        sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch perform-test-implementation'
-                        sh 'jmeter -Jjmeter.save.saveservice.output_format=xml -n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl'
-                        step([$class: 'ArtifactArchiver', artifacts: 'perform_test_bootcamp.jtl'])
-                    }
+                    sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch perform-test-implementation'
+                    sh 'jmeter -Jjmeter.save.saveservice.output_format=xml -n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl'
+                    step([$class: 'ArtifactArchiver', artifacts: 'perform_test_bootcamp.jtl'])
                 }
             }
         }

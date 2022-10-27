@@ -105,7 +105,7 @@ pipeline{
             steps{
                 script {
                     docker.image('justb4/jmeter').inside{ c ->
-
+                        sleep 30
                         sh 'jmeter -n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl'
 
 

@@ -111,7 +111,7 @@ pipeline{
                         }
 
                         sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch perform-test-implementation'
-                        sh '-Jjmeter.save.saveservice.output_format=xml -n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl'
+                        sh '-n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl'
                         step([$class: 'ArtifactArchiver', artifacts: 'perform_test_bootcamp.jtl'])
                     }
                 }

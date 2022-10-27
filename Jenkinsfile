@@ -106,7 +106,7 @@ pipeline{
                 script {
                     docker.image('justb4/jmeter').withRun { c ->
 
-                        sh '"-Jjmeter.save.saveservice.output_format=xml" -n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl'
+                        sh 'jmeter -n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl'
 
 
 //                         if(fileExists("spring-boot-app")){

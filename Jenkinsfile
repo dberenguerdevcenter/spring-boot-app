@@ -103,7 +103,6 @@ pipeline{
                      dir('jmeter-docker') {
                         sh 'chmod +775 ./build.sh && chmod +775 ./run.sh && chmod +775 ./entrypoint.sh'
                         sh 'tar -czvf apache-jmeter-5.2.1.tgz apache-jmeter-5.2.1'
-                        sh 'zip -r apache-jmeter-5.2.1.zip apache-jmeter-5.2.1'
                         sh './build.sh'
                         sh 'cp ../src/main/resources/perform_test_bootcamp.jmx .'
                         sh './run.sh -n -t perform_test_bootcamp.jmx -l perform_test_bootcamp.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'

@@ -101,6 +101,11 @@ pipeline{
                     sh 'git clone https://github.com/FranAznarTeralco/jmeter-docker.git'
 
                      dir('jmeter-docker') {
+
+                        if(fileExists("apache-jmeter-5.5.tgz")){
+                            sh 'rm -r apache-jmeter-5.5.tgz'
+                        }
+
                         sh 'wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz'
                         sh 'tar xvf apache-jmeter-5.5.tgz'
                         sh 'cp plugins/*.jar apache-jmeter-5.5/lib/ext'

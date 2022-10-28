@@ -1,5 +1,10 @@
 pipeline{
-    agent none
+
+    agent {
+        node {
+            label "nodo-java"
+        }
+    }
 
     environment {
         registryCredential='docker-hub-credentials'
@@ -9,11 +14,6 @@ pipeline{
     stages {
 
 //         stage('SonarQube analysis') {
-//         	agent {
-//                 node {
-//                     label "nodo-java"
-//                 }
-//             }
 //           steps {
 //             withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
 //                 sh "mvn clean verify sonar:sonar -DskipTests"
@@ -22,11 +22,6 @@ pipeline{
 //         }
 //
 //         stage('Quality Gate') {
-//             agent {
-//                 node {
-//                     label "nodo-java"
-//                 }
-//             }
 //             steps {
 //                 timeout(time: 10, unit: "MINUTES") {
 //                     script {
@@ -96,35 +91,27 @@ pipeline{
 //         }
 
         stage ("Run Performance Test") {
-//             agent {
-//                 docker {
-//                     image 'justb4/jmeter'
-//                     args '--entrypoint="" -u root'
-//                 }
-//             }
             steps{
                 script {
-                    docker.image('justb4/jmeter').withRun("""--entrypoint=''"""){ c ->
+                    sh 'git clone https://github.com/daeep/JMeter_Docker.git'
+                    sh './JMeter_Docker/build.sh'
 
-                        sh '-n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl'
-
-
-//                         if(fileExists("spring-boot-app")){
-//                             sh 'rm -r spring-boot-app'
-//                         }
-//
-//                         sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch perform-test-implementation'
-                        step([$class: 'ArtifactArchiver', artifacts: 'perform_test_bootcamp.jtl'])
+                    if(fileExists("spring-boot-app")){
+                        sh 'rm -r spring-boot-app'
                     }
+
+                    sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch perform-test-implementation'
+                    sh './run.sh -n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
+
+                    step([$class: 'ArtifactArchiver', artifacts: 'perform_test_bootcamp.jtl'])
                 }
             }
         }
+
+	post {
+        always {
+            sh "docker logout"
+        }
 	}
 
-// 	post {
-//
-// 		always {
-// 			sh "docker logout"
-// 		}
-// 	}
 }

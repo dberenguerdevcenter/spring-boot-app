@@ -94,7 +94,10 @@ pipeline{
             steps{
                 script {
                     sh 'git clone https://github.com/daeep/JMeter_Docker.git'
-                    sh './JMeter_Docker/build.sh'
+                    sh 'cd ./JMeter_Docker'
+                    sh 'build.sh'
+                    sh 'cd ..'
+
 
                     if(fileExists("spring-boot-app")){
                         sh 'rm -r spring-boot-app'

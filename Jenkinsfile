@@ -102,9 +102,7 @@ pipeline{
                     sh 'ls'
                     sh 'pwd'
                     sh 'git clone https://github.com/daeep/JMeter_Docker.git'
-                    sh 'cd ./JMeter_Docker'
-                    sh 'ls'
-                    sh 'cd ./JMeter_Docker'
+                    sh 'cd ./JMeter_Docker/'
                     sh 'ls'
                     sh './build.sh'
                     sh 'cd ..'
@@ -113,7 +111,6 @@ pipeline{
                         sh 'rm -r spring-boot-app'
                     }
 
-                    sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch perform-test-implementation'
                     sh './run.sh -n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
 
                     step([$class: 'ArtifactArchiver', artifacts: 'perform_test_bootcamp.jtl'])

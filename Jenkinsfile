@@ -93,14 +93,16 @@ pipeline{
         stage ("Run Performance Test") {
             steps{
                 script {
-
+                    sh 'ls'
+                    sh 'pwd'
                     if(fileExists("JMeter_Docker")){
                        sh 'rm -r JMeter_Docker'
                     }
 
+                    sh 'ls'
+                    sh 'pwd'
                     sh 'git clone https://github.com/daeep/JMeter_Docker.git'
                     sh 'cd JMeter_Docker/JMeter_Docker'
-                    sh 'ls'
                     sh './build.sh'
                     sh 'cd ..'
 

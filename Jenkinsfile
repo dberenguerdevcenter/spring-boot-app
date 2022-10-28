@@ -108,10 +108,6 @@ pipeline{
                     sh './build.sh'
                     sh 'cd ..'
 
-                    if(fileExists("spring-boot-app")){
-                        sh 'rm -r spring-boot-app'
-                    }
-
                     sh './run.sh -n -t spring-boot-app/src/main/resources/perform_test_bootcamp.jmx -l src/main/resources/perform_test_bootcamp.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
 
                     step([$class: 'ArtifactArchiver', artifacts: 'perform_test_bootcamp.jtl'])

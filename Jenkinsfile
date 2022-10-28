@@ -104,7 +104,6 @@ pipeline{
                         sh 'chmod +775 ./build.sh && chmod +775 ./run.sh && chmod +775 ./entrypoint.sh'
                         sh './build.sh'
                         sh 'cp ../src/main/resources/perform_test_bootcamp.jmx .'
-                        sh 'cp ../src/main/resources/perform_test_bootcamp.jtl .'
                         sh './run.sh -n -t ./perform_test_bootcamp.jmx -l ./perform_test_bootcamp.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
                      }
 

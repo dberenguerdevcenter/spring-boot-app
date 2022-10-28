@@ -105,7 +105,7 @@ pipeline{
                         sh './build.sh'
                         sh 'cp ../src/main/resources/perform_test_bootcamp.jmx .'
                         sh 'cp ../src/main/resources/perform_test_bootcamp.jtl .'
-                        sh './run.sh -n -t ../src/main/resources/perform_test_bootcamp.jmx -l ./perform_test_bootcamp.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
+                        sh './run.sh -n -t ./perform_test_bootcamp.jmx -l ./perform_test_bootcamp.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
                      }
 
                     step([$class: 'ArtifactArchiver', artifacts: 'perform_test_bootcamp.jtl'])

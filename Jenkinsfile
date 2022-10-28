@@ -102,6 +102,8 @@ pipeline{
 
                      dir('jmeter-docker') {
                         sh 'wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz'
+                        sh 'tar xvf apache-jmeter-5.5.tgz'
+                        sh 'cp plugins/*.jar apache-jmeter-5.5/lib/ext'
                         sh 'chmod +775 ./build.sh && chmod +775 ./run.sh && chmod +775 ./entrypoint.sh'
                         sh './build.sh'
                         sh 'cp ../src/main/resources/perform_test_bootcamp.jmx .'

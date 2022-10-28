@@ -115,7 +115,7 @@ pipeline{
                         sh './build.sh'
                         sh 'rm -r apache-jmeter-5.5 && rm -r apache-jmeter-5.5.tgz'
 //                         sh 'mv ../src/main/resources/perform_test_bootcamp.jmx test.jmx'
-                        sh './run.sh -n -t "test/perform_test_bootcamp.jmx" -l perform_test_bootcamp.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
+                        sh './run.sh -n -t "test/perform_test_bootcamp.jmx" -l test/perform_test_bootcamp.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
                      }
 
                     step([$class: 'ArtifactArchiver', artifacts: 'perform_test_bootcamp.jtl'])

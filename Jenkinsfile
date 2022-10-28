@@ -114,8 +114,9 @@ pipeline{
                         sh 'tar -czvf apache-jmeter-5.5.tgz apache-jmeter-5.5'
                         sh './build.sh'
                         sh 'rm -r apache-jmeter-5.5 && rm -r apache-jmeter-5.5.tgz'
-//                         sh 'mv ../src/main/resources/perform_test_bootcamp.jmx test.jmx'
-                        sh './run.sh -n -t "test/perform_test_bootcamp.jmx" -l test/perform_test_bootcamp.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
+                        sh 'mv ../src/main/resources/perform_test_bootcamp.jmx'
+                        sh 'chmod 777 perform_test_bootcamp.jmx'
+                        sh './run.sh -n -t "perform_test_bootcamp.jmx" -l test/perform_test_bootcamp.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
                      }
 
                     step([$class: 'ArtifactArchiver', artifacts: 'perform_test_bootcamp.jtl'])

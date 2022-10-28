@@ -105,6 +105,7 @@ pipeline{
                     sh 'cd ./JMeter_Docker/'
                     sh 'ls'
                     sh 'cd JMeter_Docker/'
+                    sh 'ls'
                     sh './build.sh'
                     sh 'cd ..'
 

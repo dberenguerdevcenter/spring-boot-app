@@ -103,7 +103,6 @@ pipeline{
                     sh 'build.sh'
                     sh 'cd ..'
 
-
                     if(fileExists("spring-boot-app")){
                         sh 'rm -r spring-boot-app'
                     }

@@ -101,7 +101,7 @@ pipeline{
 
                     sh 'ls'
                     sh 'pwd'
-                    sh 'git clone https://github.com/daeep/JMeter_Docker.git'
+                    sh 'git clone https://github.com/FranAznarTeralco/jmeter-docker.git'
 
                      dir('JMeter_Docker') {
                         sh './build.sh'

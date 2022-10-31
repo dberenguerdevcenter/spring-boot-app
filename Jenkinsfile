@@ -134,9 +134,11 @@ pipeline{
 
                      dir('jmeter-docker') {
                         sh 'pip install bzt'
-                            BlazeMeterTest: {
-                                sh 'bzt  test/perform_test.jtl -report'
-                            }
+                        sh 'export PATH=$PATH:/home/jenkins/.local/bin'
+
+                        BlazeMeterTest: {
+                            sh 'bzt  test/perform_test.jtl -report'
+                        }
                      }
                 }
             }

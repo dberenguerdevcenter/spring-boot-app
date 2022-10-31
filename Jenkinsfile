@@ -120,7 +120,7 @@ pipeline{
                         sh 'cp ../src/main/resources/perform_test.jmx test'
                         sh './run.sh -n -t test/perform_test.jmx -l test/perform_test.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
                         sh 'docker cp jmeter:/home/jmeter/apache-jmeter-5.5/test/perform_test.jtl /home/jenkins/workspace/_app_perform-test-implementation/jmeter-docker/test'
-                        perfReport 'jmeter-docker/test/perform_test.jtl'
+                        perfReport '/home/jenkins/workspace/_app_perform-test-implementation/jmeter-docker/test/perform_test.jtl'
 
                      }
 

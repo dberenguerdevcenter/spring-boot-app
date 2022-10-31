@@ -121,10 +121,23 @@ pipeline{
                         sh './run.sh -n -t test/perform_test.jmx -l test/perform_test.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
                         sh 'docker cp jmeter:/home/jmeter/apache-jmeter-5.5/test/perform_test.jtl /home/jenkins/workspace/_app_perform-test-implementation/jmeter-docker/test'
                         perfReport '/home/jenkins/workspace/_app_perform-test-implementation/jmeter-docker/test/perform_test.jtl'
-
                      }
 
-//                     step([$class: 'ArtifactArchiver', artifacts: 'jmeter-docker/test/perform_test.jtl'])
+                }
+            }
+        }
+
+
+        stage ("Generate Taurus Report") {
+            steps{
+                script {
+
+                     dir('jmeter-docker') {
+                        sh 'pip install bzt'
+                            BlazeMeterTest: {
+                                sh 'bzt  test/perform_test.jtl -report'
+                            }
+                     }
                 }
             }
         }

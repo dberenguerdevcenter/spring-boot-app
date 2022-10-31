@@ -109,6 +109,7 @@ pipeline{
                         sh 'wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz'
                         sh 'tar xvf apache-jmeter-5.5.tgz'
                         sh 'cp plugins/*.jar apache-jmeter-5.5/lib/ext'
+                        sh 'cp test apache-jmeter-5.5/'
                         sh 'chmod +775 ./build.sh && chmod +775 ./run.sh && chmod +775 ./entrypoint.sh'
                         sh 'rm -r apache-jmeter-5.5.tgz'
                         sh 'tar -czvf apache-jmeter-5.5.tgz apache-jmeter-5.5'

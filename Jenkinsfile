@@ -123,7 +123,7 @@ pipeline{
 
                      }
 
-                    step([$class: 'ArtifactArchiver', artifacts: 'test/perform_test.jtl'])
+                    step([$class: 'ArtifactArchiver', artifacts: '/home/jenkins/workspace/_app_perform-test-implementation/jmeter-docker/test/perform_test.jtl'])
                 }
             }
         }

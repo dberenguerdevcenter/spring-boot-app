@@ -120,7 +120,7 @@ pipeline{
                         sh './run.sh -n -t test/perform_test.jmx -l test/perform_test.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
                      }
 
-                    step([$class: 'ArtifactArchiver', artifacts: 'perform_test.jtl'])
+                    step([$class: 'ArtifactArchiver', artifacts: 'test/perform_test.jtl'])
                 }
             }
         }

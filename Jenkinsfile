@@ -137,7 +137,7 @@ pipeline{
                         sh 'export PATH=$PATH:/home/jenkins/.local/bin'
 
                         BlazeMeterTest: {
-                            sh 'bzt  test/perform_test.jtl -report'
+                            sh 'bzt test/perform_test.jtl -report'
                         }
                      }
                 }

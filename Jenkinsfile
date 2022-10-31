@@ -111,7 +111,7 @@ pipeline{
                         sh 'cp plugins/*.jar apache-jmeter-5.5/lib/ext'
                         sh 'mkdir test'
                         sh 'mkdir apache-jmeter-5.5/test'
-                        sh 'cp ../src/main/resources/*.jmx ./test/'
+                        sh 'cp ../src/main/resources/*.jmx apache-jmeter-5.5/test/'
                         sh 'chmod +775 ./build.sh && chmod +775 ./run.sh && chmod +775 ./entrypoint.sh'
                         sh 'rm -r apache-jmeter-5.5.tgz'
                         sh 'tar -czvf apache-jmeter-5.5.tgz apache-jmeter-5.5'

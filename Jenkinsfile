@@ -90,7 +90,7 @@ pipeline{
 //             }
 //         }
 
-        stage ("Run Performance Test") {
+        stage ("Setup Jmeter") {
             steps{
                 script {
 
@@ -118,6 +118,20 @@ pipeline{
                         sh './build.sh'
                         sh 'rm -r apache-jmeter-5.5 && rm -r apache-jmeter-5.5.tgz'
                         sh 'cp ../src/main/resources/perform_test.jmx test'
+                     }
+
+                }
+            }
+        }
+
+
+        stage ("Run Jmeter Performance Test") {
+            steps{
+                script {
+                     dir('jmeter-docker') {
+                        if(fileExists("apache-jmeter-5.5.tgz")){
+                            sh 'rm -r apache-jmeter-5.5.tgz'
+                        }
                         sh './run.sh -n -t test/perform_test.jmx -l test/perform_test.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
                         sh 'docker cp jmeter:/home/jmeter/apache-jmeter-5.5/test/perform_test.jtl /home/jenkins/workspace/_app_perform-test-implementation/jmeter-docker/test'
                         perfReport '/home/jenkins/workspace/_app_perform-test-implementation/jmeter-docker/test/perform_test.jtl'
@@ -127,11 +141,9 @@ pipeline{
             }
         }
 
-
         stage ("Generate Taurus Report") {
             steps{
                 script {
-
                      dir('jmeter-docker') {
                         sh 'pip install bzt'
                         sh 'export PATH=$PATH:/home/jenkins/.local/bin'

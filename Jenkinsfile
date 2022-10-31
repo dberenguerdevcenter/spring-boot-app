@@ -117,7 +117,7 @@ pipeline{
                         sh 'tar -czvf apache-jmeter-5.5.tgz apache-jmeter-5.5'
                         sh './build.sh'
                         sh 'rm -r apache-jmeter-5.5 && rm -r apache-jmeter-5.5.tgz'
-                        sh 'cp ../src/main/resources/perform_test.jmx .'
+                        sh 'cp ../src/main/resources/perform_test.jmx test'
                         sh './run.sh -n -t test/perform_test.jmx -l test/perform_test.jtl -Jthreads=2 -Jrampup=1 -Jduration=10'
                      }
 

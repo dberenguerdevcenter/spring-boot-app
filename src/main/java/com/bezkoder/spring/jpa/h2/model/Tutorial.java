@@ -3,7 +3,6 @@ package com.bezkoder.spring.jpa.h2.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tutorials")
 public class Tutorial {
 
 	@Id
@@ -20,7 +19,6 @@ public class Tutorial {
 	private boolean published;
 
 	public Tutorial() {
-
 	}
 
 	public Tutorial(String title, String description, boolean published) {
@@ -31,6 +29,10 @@ public class Tutorial {
 
 	public long getId() {
 		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getTitle() {

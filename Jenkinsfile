@@ -1,3 +1,4 @@
+def versionPom = ""
 pipeline {
     agent {
         node {
@@ -10,6 +11,8 @@ pipeline {
         NEXUS_URL = "192.168.49.6:8081"
         NEXUS_REPOSITORY = "bootcamp"
         NEXUS_CREDENTIAL_ID = "nexus"
+        DOCKERHUB_CREDENTIALS=credentials("docker-hub")
+        DOCKER_IMAGE_NAME="dberenguerdevcenter/spring-boot-app"
 	}
     stages{
         stage("Test"){
@@ -73,6 +76,13 @@ pipeline {
                 }
             }
         }
+
+        stage("Build image and push to Docker Hub") {
+            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            sh "docker build -t $DOCKER_IMAGE_NAME:${versionPom} ."
+            sh "docker push $DOCKER_IMAGE_NAME:${versionPom}"
+        }
+        
     }
 
 }

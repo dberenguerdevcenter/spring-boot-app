@@ -82,6 +82,8 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh "docker build -t $DOCKER_IMAGE_NAME:${versionPom} ."
                 sh "docker push $DOCKER_IMAGE_NAME:${versionPom}"
+                sh "docker build -t $DOCKER_IMAGE_NAME:latest ."
+                sh "docker push $DOCKER_IMAGE_NAME:latest"
             }
         }
 

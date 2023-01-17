@@ -1,5 +1,5 @@
-def versionPom = ""
 pipeline{
+
 	agent {
         node {
             label "java-node"
@@ -7,7 +7,7 @@ pipeline{
     }
 
     stages {
-        stage('Build Project') {
+        stage('Build') {
           steps {
                sh "mvn clean install -DskipTests"
           }

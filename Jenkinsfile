@@ -19,6 +19,7 @@ pipeline{
             withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){
                 sh "mvn clean verify sonar:sonar -DskipTests"
             }
+          }
         }
 
         stage('Quality Gate') {

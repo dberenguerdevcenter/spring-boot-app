@@ -8,6 +8,8 @@ pipeline{
 
     environment {
         registryCredential='docker-hub-credentials'
+        registryBackend = 'franaznarteralco/backend-demo'
+
     }
 
     stages {

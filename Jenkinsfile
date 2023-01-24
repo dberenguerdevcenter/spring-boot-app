@@ -6,12 +6,27 @@ pipeline{
         }
     }
 
+    environment {
+        registryCredential='docker-hub-credentials'
+    }
+
     stages {
 
         stage('Build') {
           steps {
                sh "mvn clean install -DskipTests"
           }
+        }
+
+        stage('Push Image to Docker Hub') {
+            steps {
+                script {
+                    dockerImage = docker.build registryBackend + ":latest"
+                    docker.withRegistry( '', registryCredential) {
+                        dockerImage.push()
+                    }
+                }
+            }
         }
 
         stage('SonarQube Analysis') {

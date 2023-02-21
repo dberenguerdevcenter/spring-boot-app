@@ -19,6 +19,14 @@ pipeline{
           }
         }
 
+        stage("Test") {
+            steps {
+                sh "mvn test"
+                jacoco()
+                junit "target/surefire-reports/*.xml"
+            }
+        }
+
         stage('SonarQube Analysis') {
           steps {
             withSonarQubeEnv(credentialsId: "sonarqube-credentials", installationName: "sonarqube-server"){

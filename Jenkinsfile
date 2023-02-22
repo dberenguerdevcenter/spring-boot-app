@@ -76,8 +76,6 @@ pipeline{
 
     post {
         always {
-            sh "docker rm -f backend"
-            sh "docker network rm test-env"
             sh "docker logout"
             sh "docker rmi -f " + registryBackend + ":latest"
         }

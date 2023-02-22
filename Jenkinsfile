@@ -13,19 +13,19 @@ pipeline{
 
     stages {
 
-        stage('Build') {
-          steps {
-               sh "mvn clean install -DskipTests"
-          }
-        }
-
-        stage("Test") {
-            steps {
-                sh "mvn test"
-                jacoco()
-                junit "target/surefire-reports/*.xml"
-            }
-        }
+//         stage('Build') {
+//           steps {
+//                sh "mvn clean install -DskipTests"
+//           }
+//         }
+//
+//         stage("Test") {
+//             steps {
+//                 sh "mvn test"
+//                 jacoco()
+//                 junit "target/surefire-reports/*.xml"
+//             }
+//         }
 
 //         stage('SonarQube Analysis') {
 //           steps {
@@ -48,13 +48,22 @@ pipeline{
 //           }
 //         }
 
+//         stage('Push Image to Docker Hub') {
+//             steps {
+//                 script {
+//                     dockerImage = docker.build registryBackend + ":latest"
+//                     docker.withRegistry( '', registryCredential) {
+//                         dockerImage.push()
+//                     }
+//                 }
+//             }
+//         }
+
         stage('Push Image to Docker Hub') {
             steps {
                 script {
-                    dockerImage = docker.build registryBackend + ":latest"
-                    docker.withRegistry( '', registryCredential) {
-                        dockerImage.push()
-                    }
+                 sh 'docker ps'
+
                 }
             }
         }

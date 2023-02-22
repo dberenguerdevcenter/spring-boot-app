@@ -13,11 +13,11 @@ pipeline{
 
     stages {
 
-//         stage('Build') {
-//           steps {
-//                sh "mvn clean install -DskipTests"
-//           }
-//         }
+        stage('Build') {
+          steps {
+               sh "mvn clean install -DskipTests"
+          }
+        }
 //
 //         stage("Test") {
 //             steps {
@@ -48,16 +48,16 @@ pipeline{
 //           }
 //         }
 
-//         stage('Push Image to Docker Hub') {
-//             steps {
-//                 script {
-//                     dockerImage = docker.build registryBackend + ":latest"
-//                     docker.withRegistry( '', registryCredential) {
-//                         dockerImage.push()
-//                     }
-//                 }
-//             }
-//         }
+        stage('Push Image to Docker Hub') {
+            steps {
+                script {
+                    dockerImage = docker.build registryBackend + ":latest"
+                    docker.withRegistry( '', registryCredential) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
 
         stage('Push Image to Docker Hub') {
             steps {

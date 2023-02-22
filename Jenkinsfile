@@ -62,7 +62,7 @@ pipeline{
         stage('Push Image to Docker Hub') {
             steps {
                 script {
-                 sh 'docker run -d -p 8081:8080 --name backend' + registryBackend
+                 sh 'docker run -d -p 8081:8080 --name backend ' + registryBackend
                 }
             }
         }

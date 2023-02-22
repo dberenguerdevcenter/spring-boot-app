@@ -62,7 +62,7 @@ pipeline{
         stage('Push Image to Docker Hub') {
             steps {
                 script {
-                 sh 'docker run -d -p 8081:8080 --name backend ' + registryBackend
+                 sh 'docker run -d -p 8081:8080 --network jenkins --name backend ' + registryBackend
                 }
             }
         }
@@ -71,6 +71,7 @@ pipeline{
 
     post {
         always {
+            sh "docker rm -f backend"
             sh "docker logout"
             sh "docker rmi -f " + registryBackend + ":latest"
         }

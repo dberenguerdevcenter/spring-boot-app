@@ -62,7 +62,7 @@ pipeline{
         stage('Prepare Test Env') {
             steps {
                 script {
-                 sh 'docker network create test'
+                 sh 'docker network create test-env'
                  sh 'docker run -d -p 8081:8080 --network test --name backend ' + registryBackend
                  sh ''
                 }

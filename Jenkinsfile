@@ -59,7 +59,7 @@ pipeline{
             }
         }
 
-        stage('Push Image to Docker Hub') {
+        stage('Prepare Test Env') {
             steps {
                 script {
                  sh 'docker network create test'

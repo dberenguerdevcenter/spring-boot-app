@@ -59,13 +59,16 @@ pipeline{
             }
         }
 
-        stage('Prepare Test Env') {
-            steps {
+        stage("Deploy to K8s"){
+            steps{
                 script {
-                 sh 'docker network create test-env'
-                 sh 'docker run -d -p 8081:8080 --network test --name backend ' + registryBackend
-                 sh ''
+                  if(fileExists("configuracion")){
+                    sh 'rm -r configuracion'
+                  }
                 }
+
+                sh 'git clone https://github.com/dberenguerdevcenter/kubernetes-helm-docker-config.git configuracion --branch training-qa'
+                sh 'kubectl apply -f configuracion/kubernetes-deployment/spring-boot-app/manifest.yml -n default --kubeconfig=configuracion/kubernetes-config/config'
             }
         }
 

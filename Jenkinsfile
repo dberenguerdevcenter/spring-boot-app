@@ -80,6 +80,7 @@ pipeline{
                             sh 'rm -r spring-boot-app'
                         }
                         sleep 15 // seconds
+                        sh 'npm install newman'
                         sh 'git clone https://github.com/dberenguerdevcenter/spring-boot-app.git spring-boot-app --branch training-qa'
                         sh 'newman run spring-boot-app/src/main/resources/postman_api_test.json --reporters cli,junit --reporter-junit-export "newman/report.xml"'
                         junit "newman/report.xml"
